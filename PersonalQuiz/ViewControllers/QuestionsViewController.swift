@@ -39,6 +39,13 @@ class QuestionsViewController: UIViewController {
         updateUI()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+          if segue.identifier == "resultSegue" {
+              guard let resultVC = segue.destination as? ResultsViewController else { return }
+              resultVC.answersChoosen = answersChoosen
+          }
+      }
+    
     @IBAction func singleButtonAnswerPressed(_ sender: UIButton) {
         guard let currentIndex = singleButtons.firstIndex(of: sender) else {
             return
@@ -61,22 +68,10 @@ class QuestionsViewController: UIViewController {
     }
     
     @IBAction func rangedAnswerButtonPressed() {
-        let index = lrintf(rangedSlider.value * Float(currentAnswers.count - 1))
+        let index = Int(rangedSlider.value)
         answersChoosen.append(currentAnswers[index])
         nextQuestion()
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 // MARK: - Private Methodx
